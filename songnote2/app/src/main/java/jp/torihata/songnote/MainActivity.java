@@ -1,9 +1,12 @@
 package jp.torihata.songnote;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -14,15 +17,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] members = { "セロリ", "愛のしるし", "サウスポー", "I feel the earth move",
-                "Help!", "ルージュの伝言", "I wanna be sadated" };
+        String[] members = { "音タイム", "セロリ", "愛のしるし", "サウスポー", "明日天気になれ",
+                "Help!", "ルージュの伝言", "I wanna be sadated",  "I feel the earth move", "Saturday Night" };
 
         ListView lv = (ListView) findViewById(R.id.listView1);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_expandable_list_item_1, members);
 
         lv.setAdapter(adapter);
+
+        // リスト項目がクリックされた時の処理
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                final String strData = adapter.getItem(position);
+
+                Intent intent = new Intent();
+
+                switch (position) {
+                    case 0:
+                        intent.setClass(MainActivity.this, Detail1.class);
+                        break;
+                }
+                intent.putExtra("POSITION", position);
+                intent.putExtra("SELECTED_DATA", strData);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

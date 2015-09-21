@@ -3,4 +3,27 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_detail1">Detail1</string>
+    <string name="lyrics_ontime">さぁ　始めよう\n音タイム　音タイム　音タイム\n
+さぁ　歌いましょう\n
+音タイム　音タイム　音タイム\n
+\n
+君と僕とは　遠い昔に\n
+出会ってたような　気がしてる\n
+\n
+さぁ　踊りましょう\n
+サンダンス　ムーンダンス　音タイム\n
+\n
+朝が来たなら　朝を歌おう\n
+夜が更けたら　夜の歌を\n
+素敵なメロディー　口ずさめば\n
+思い出せるよ　懐かしきストーリーを\n
+\n
+さぁ　始めよう\n
+音タイム　音タイム　音タイム\n
+さぁ　歌いましょう…\n
+音タイム　音タイム　音タイム\n
+音タイム　音タイム　音タイム\n
+音タイム　音タイム　音タイム\n
+    </string>
 </resources>
