@@ -17,8 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Detail1"
-            android:label="@string/title_activity_detail1" >
+            android:name=".Detail1">
         </activity>
     </application>
 
