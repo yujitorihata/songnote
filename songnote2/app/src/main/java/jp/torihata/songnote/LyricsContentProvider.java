@@ -20,6 +20,7 @@ public class LyricsContentProvider extends ContentProvider{
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
         URI_MATCHER.addURI(Lyrics.CONTENT_URI.getAuthority(), Lyrics.TABLE_NAME, Lyrics.URL_CODE);
+        URI_MATCHER.addURI(Lyrics.CONTENT_URI.getAuthority(), Lyrics.TABLE_NAME + "/#", Lyrics.URL_CODE2);
     }
     @SuppressWarnings("unused")
     private static final String TAG = LyricsContentProvider.class.getSimpleName();
@@ -69,10 +70,22 @@ public class LyricsContentProvider extends ContentProvider{
         SQLiteDatabase db = mLyricsOpenHelper.getReadableDatabase();
         // URIからテーブル名を取得
         String tableName = uri.getPathSegments().get(0);
-        Cursor cursor = db.query(tableName, projection, selection, selectionArgs, null, null, sortOrder);
+
+        Integer result = URI_MATCHER.match(uri);
+        switch (result) {
+            case 1:
+                return db.query(tableName, projection, selection, selectionArgs, null, null, sortOrder);
+
+            case 2:
+                return db.query(tableName, projection, "_ID = ?", new String[]{uri.getLastPathSegment()}, null, null, sortOrder);
+
+            default:
+                return null;
+        }
+
         // 設定したURIの変更を監視するように設定
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
-        return cursor;
+        //cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        //return cursor;
     }
 
     @Override
@@ -90,7 +103,7 @@ public class LyricsContentProvider extends ContentProvider{
     // このContentProviderで使用可能なURIかを判定します。
     // 使用不可の場合はIllegalArgumentExceptionを投げます。
     private void isValidUri(Uri uri) {
-        if (URI_MATCHER.match(uri) != Lyrics.URL_CODE) {
+        if (URI_MATCHER.match(uri) != Lyrics.URL_CODE && URI_MATCHER.match(uri) != Lyrics.URL_CODE2) {
             throw new IllegalArgumentException("Unknown URI : " + uri + URI_MATCHER.match(uri));
         }
     }

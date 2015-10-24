@@ -1,5 +1,8 @@
 package jp.torihata.songnote;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,13 +25,28 @@ public class Detail1Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Intent i = getActivity().getIntent();
+        Integer position = i.getIntExtra("POSITION", 1);
+        position++;
+
+        final Cursor cursor = getActivity().getContentResolver().query(Uri.parse(String.valueOf(Lyrics.CONTENT_URI) + "/" + position), null, null, null, null);
+        cursor.moveToFirst();
+
         // ActionBarのタイトルをセット
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+        int fieldIndex = cursor.getColumnIndex(Lyrics.COLUMN_NAME_TITLE);
+        String title = cursor.getString(fieldIndex);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title);
 
         // 本文のセット
+        int fieldIndex2 = cursor.getColumnIndex(Lyrics.COLUMN_NAME_BODY);
+        String body = cursor.getString(fieldIndex2);
         View v =inflater.inflate(R.layout.fragment_detail1, container, false);
-        final TextView body = (TextView)v.findViewById(R.id.body);
-        body.setText(getString(R.string.lyrics_ontime));
+        final TextView bodyView = (TextView)v.findViewById(R.id.body);
+        bodyView.setText(body);
+
+        //カーソルを閉じる
+        cursor.close();
+
         return v;
     }
 }

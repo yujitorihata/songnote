@@ -52,11 +52,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 Intent intent = new Intent();
 
-                switch (position) {
-                    case 0:
+                //switch (position) {
+                //    case 0:
                         intent.setClass(MainActivity.this, Detail1.class);
-                        break;
-                }
+                //        break;
+                //}
                 intent.putExtra("POSITION", position);
                 //intent.putExtra("SELECTED_DATA", strData);
                 startActivity(intent);
