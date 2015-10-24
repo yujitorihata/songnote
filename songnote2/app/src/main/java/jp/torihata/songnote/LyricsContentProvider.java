@@ -19,8 +19,7 @@ public class LyricsContentProvider extends ContentProvider{
     private static final UriMatcher URI_MATCHER;
     static {
         URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-        // TODO: これであってるのか不明
-        URI_MATCHER.addURI(Lyrics.CONTENT_URI.getAuthority(), Lyrics.TABLE_NAME, Lyrics);
+        URI_MATCHER.addURI(Lyrics.CONTENT_URI.getAuthority(), Lyrics.TABLE_NAME, Lyrics.URL_CODE);
     }
     @SuppressWarnings("unused")
     private static final String TAG = LyricsContentProvider.class.getSimpleName();
@@ -91,8 +90,8 @@ public class LyricsContentProvider extends ContentProvider{
     // このContentProviderで使用可能なURIかを判定します。
     // 使用不可の場合はIllegalArgumentExceptionを投げます。
     private void isValidUri(Uri uri) {
-        if (URI_MATCHER.match(uri) != Lyrics) {
-            throw new IllegalArgumentException("Unknown URI : " + uri);
+        if (URI_MATCHER.match(uri) != Lyrics.URL_CODE) {
+            throw new IllegalArgumentException("Unknown URI : " + uri + URI_MATCHER.match(uri));
         }
     }
 
